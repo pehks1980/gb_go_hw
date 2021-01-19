@@ -7,7 +7,7 @@ import (
 )
 
 /*Напишите программу, вычисляющую диаметр(наверное, скорее радиус) и длину окружности по заданной площади круга.
-	Площадь круга должна вводиться пользователем с клавиатуры.*/
+Площадь круга должна вводиться пользователем с клавиатуры.*/
 func main() {
 	var circle_area float64
 
@@ -22,6 +22,6 @@ func main() {
 	// compute radius & circle_length in one func
 	diameter, circle_len := circle.CircleParams(circle_area)
 
-	fmt.Printf("Диаметр окружности равен: %.2f\n", diameter )
+	fmt.Printf("Диаметр окружности равен: %.2f\n", diameter)
 	fmt.Printf("Длина окружности равна: %.2f\n", circle_len)
 }
