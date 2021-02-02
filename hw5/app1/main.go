@@ -34,8 +34,8 @@ func getFibbo(n int64) int64 {
 }
 
 //вычисляет число фиббоббанначчи c кешированием предварит вычислений
-func getFibboMap(n int64, cache map[int]int64) int64 {
-	if val, ok := cache[int(n)]; ok {
+func getFibboMap(n int64, cache *map[int]int64) int64 {
+	if val, ok := (*cache)[int(n)]; ok {
 		fmt.Println("!got cache for n=", n)
 		return val
 	}
@@ -59,7 +59,7 @@ func main() {
 	mapResult := make(map[int]int64, n)
 	fmt.Println("Вычисление рекурсией и кешированием:")
 	for i := 0; i <= int(n); i++ {
-		mapResult[i] = getFibboMap(int64(i), mapResult)
+		mapResult[i] = getFibboMap(int64(i), &mapResult)
 		fmt.Printf("Result n = %d значение = %d\n", i, mapResult[i])
 	}
 
