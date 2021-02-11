@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"math"
-	"os"
 )
 
 /*
@@ -12,29 +11,26 @@ import (
 */
 
 // функция возвращет true если нет ни одного делителя
-func isPrime(n int32) bool {
+func isPrime(n uint64) bool {
 	if n < 2 {
 		return false
 	}
 	if n == 2 {
 		return true
 	}
-	limit := int32(math.Sqrt(float64(n)))
 
-	i := int32(2)
+	limit := uint64(math.Sqrt(float64(n)))
 
-	for i <= limit {
+	for i:= uint64(2); i<= limit; i++ {
 		if n%i == 0 {
 			return false
 		}
-		i++
-
 	}
 	return true
 }
 
 func main() {
-	var aN int32
+	var aN uint64
 
 	fmt.Printf("Введите, пожалуйста N ")
 
@@ -42,23 +38,21 @@ func main() {
 	if err != nil {
 		// error here
 		fmt.Printf("Error enter")
-		os.Exit(1)
+		return
 	}
 
 	//слайс - список простых чисел
-	var numArr []int32
-	var i int32 = 2
+	var numArr []uint64
 
-	for i <= aN {
-		if isPrime(i) == true {
+	for i:= uint64(2); i<= aN; i++ {
+		if isPrime(i) {
 			//fmt.Printf("Число %d простое\n", i)
 			numArr = append(numArr, i)
 		}
-		i++
 	}
 
-	for i := range numArr {
-		fmt.Printf("Число %d простое\n", numArr[i])
+	for _, prime := range numArr {
+		fmt.Printf("Число %d простое\n", prime)
 	}
 
 }

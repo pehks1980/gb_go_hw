@@ -2,20 +2,18 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"math"
-	"os"
 )
 
 // функция берет число с клавиатуры, проверяет данные на валидность
-func getDigit(prompt string) int32 {
+func getDigit(prompt string) (int32, error) {
 	var a int32
 	fmt.Println(prompt)
 	_, err := fmt.Scanln(&a)
 	if err != nil {
-		log.Fatal("ошибко %v", err)
+		return 0, err
 	}
-	return a
+	return a, nil
 }
 
 //вычисляет факториал рекурсией
@@ -30,80 +28,84 @@ func getFact(n int64) int64 {
 калькулятор: больше операций и валидации данных
 */
 func main() {
+
 	var a, b int32
 	var op string
 	var res int32
 
-label:
+	for {
 
-	opNumber := getDigit("Введите номер операции:  (0 - выход) 1-'+' 2-'+' 3-'*' 4-'/' 5-'square root' 6-'factorial'")
-	switch opNumber {
-	case 0:
-		fmt.Println("До свидания!")
-		os.Exit(0)
-	case 1:
-		a = getDigit("Введите число A:")
-		b = getDigit("Введите число Б:")
-		op = "+"
-	case 2:
-		a = getDigit("Введите число A:")
-		b = getDigit("Введите число Б:")
-		op = "-"
-	case 3:
-		a = getDigit("Введите число A:")
-		b = getDigit("Введите число Б:")
-		op = "*"
-	case 4:
-		a = getDigit("Введите число A:")
-		b = getDigit("Введите число Б:")
-		op = "/"
-	case 5:
-		a = getDigit("Введите число A:")
-		op = "sqrt"
-	case 6:
-		a = getDigit("Введите число A:")
-		op = "fact"
-	default:
-		fmt.Println("Операция выбрана неверно")
-		os.Exit(1)
-	}
+		opNumber, err := getDigit("Введите номер операции:  (0 - выход) 1-'+' 2-'+' 3-'*' 4-'/' 5-'square root' 6-'factorial'")
 
-	switch op {
-	case "+":
-		res = a + b
-		fmt.Printf("Результат выполнения операции: %d\n", res)
-	case "-":
-		res = a - b
-		fmt.Printf("Результат выполнения операции: %d\n", res)
-	case "*":
-		res = a * b
-		fmt.Printf("Результат выполнения операции: %d\n", res)
-	case "/":
-		if b != 0 {
-			resFl := float32(a) / float32(b)
-			fmt.Printf("Результат выполнения операции: %.4f\n", resFl)
-		} else {
-			fmt.Println("На 0 делить нельзя!")
-			//os.Exit(1)
+		if err != nil {
+			fmt.Println("Ничего не понял, пока!")
+			return
 		}
-	case "sqrt":
-		if a > 0 {
-			resFl := math.Sqrt(float64(a))
-			fmt.Printf("Результат выполнения операции: %.4f\n", resFl)
-		} else {
-			fmt.Println("Число должно быть больше 0")
-			//os.Exit(1)
+
+		switch opNumber {
+		case 0:
+			fmt.Println("До свидания!")
+			return
+		case 1:
+			a, _ = getDigit("Введите число A:")
+			b, _ = getDigit("Введите число Б:")
+			op = "+"
+		case 2:
+			a, _ = getDigit("Введите число A:")
+			b, _ = getDigit("Введите число Б:")
+			op = "-"
+		case 3:
+			a, _ = getDigit("Введите число A:")
+			b, _ = getDigit("Введите число Б:")
+			op = "*"
+		case 4:
+			a, _ = getDigit("Введите число A:")
+			b, _ = getDigit("Введите число Б:")
+			op = "/"
+		case 5:
+			a, _ = getDigit("Введите число A:")
+			op = "sqrt"
+		case 6:
+			a, _ = getDigit("Введите число A:")
+			op = "fact"
+		default:
+			fmt.Println("Операция выбрана неверно")
+			return
 		}
-	case "fact":
-		if a > 0 && a < 26 {
-			res := getFact( int64(a) )
+
+		switch op {
+		case "+":
+			res = a + b
 			fmt.Printf("Результат выполнения операции: %d\n", res)
-		} else {
-			fmt.Println("Число должно быть в диапазоне 1-25 ")
-			//os.Exit(1)
+		case "-":
+			res = a - b
+			fmt.Printf("Результат выполнения операции: %d\n", res)
+		case "*":
+			res = a * b
+			fmt.Printf("Результат выполнения операции: %d\n", res)
+		case "/":
+			if b != 0 {
+				resFl := float32(a) / float32(b)
+				fmt.Printf("Результат выполнения операции: %.4f\n", resFl)
+			} else {
+				fmt.Println("На 0 делить нельзя!")
+			}
+		case "sqrt":
+			if a > 0 {
+				resFl := math.Sqrt(float64(a))
+				fmt.Printf("Результат выполнения операции: %.4f\n", resFl)
+			} else {
+				fmt.Println("Число должно быть больше 0")
+			}
+		case "fact":
+			if a > 0 && a < 26 {
+				res := getFact(int64(a))
+				fmt.Printf("Результат выполнения операции: %d\n", res)
+			} else {
+				fmt.Println("Число должно быть в диапазоне 1-25 ")
+			}
+
 		}
 
 	}
-
-	goto label
 }

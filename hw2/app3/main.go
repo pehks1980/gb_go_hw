@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"os"
 )
 
 /*  С клавиатуры вводится трехзначное число.
@@ -11,7 +10,7 @@ import (
 */
 
 func main() {
-	var aNumber int16
+	var aNumber uint16
 
 	fmt.Printf("Введите, пожалуйста число:")
 
@@ -19,7 +18,7 @@ func main() {
 	if err != nil {
 		// error here
 		fmt.Printf("Error enter")
-		os.Exit(128)
+		return
 	}
 
 	fmt.Printf("Число сотен: %d, десятков: %d, единиц: %d\n",

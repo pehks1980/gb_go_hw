@@ -12,18 +12,19 @@ import (
 */
 
 // функция берет число с клавиатуры, проверяет данные на валидность
-func getDigit(prompt string) int32 {
-	var a int32
+func getDigit(prompt string) (uint64, error) {
+	var a uint64
 	fmt.Println(prompt)
 	_, err := fmt.Scanln(&a)
 	if err != nil {
-		log.Fatal("ошибко %v", err)
+		log.Println("Ошибка:", err)
+		return 0, err
 	}
-	return a
+	return a, nil
 }
 
 // вычисляет число фиббоббанначчи
-func getFibbo(n int64) int64 {
+func getFibbo(n uint64) uint64 {
 	if n == 0 {
 		return 0
 	}
@@ -34,8 +35,8 @@ func getFibbo(n int64) int64 {
 }
 
 //вычисляет число фиббоббанначчи c кешированием предварит вычислений
-func getFibboMap(n int64, cache *map[int]int64) int64 {
-	if val, ok := (*cache)[int(n)]; ok {
+func getFibboMap(n uint64, cache *map[uint64]uint64) uint64 {
+	if val, ok := (*cache)[n]; ok {
 		fmt.Println("!got cache for n=", n)
 		return val
 	}
@@ -49,17 +50,22 @@ func getFibboMap(n int64, cache *map[int]int64) int64 {
 }
 
 func main() {
-	n := getDigit("Введите N: (40 для наглядности): ")
+	n, err := getDigit("Введите N: (40 для наглядности): ")
 
-	fmt.Println("Вычисление обычной рекурсией:")
-	for i := 0; i <= int(n); i++ {
-		fmt.Printf("Result n = %d значение = %d\n", i, getFibbo(int64(i)))
+	if err != nil {
+		fmt.Println("Oшибка ввода.")
+		return
 	}
 
-	mapResult := make(map[int]int64, n)
+	fmt.Println("Вычисление обычной рекурсией:")
+	for i := uint64(0); i <= n; i++ {
+		fmt.Printf("Result n = %d значение = %d\n", i, getFibbo(i))
+	}
+
+	mapResult := make(map[uint64]uint64, n)
 	fmt.Println("Вычисление рекурсией и кешированием:")
-	for i := 0; i <= int(n); i++ {
-		mapResult[i] = getFibboMap(int64(i), &mapResult)
+	for i := uint64(0); i <= n; i++ {
+		mapResult[i] = getFibboMap(i, &mapResult)
 		fmt.Printf("Result n = %d значение = %d\n", i, mapResult[i])
 	}
 

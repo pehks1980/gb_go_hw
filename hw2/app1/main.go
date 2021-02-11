@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"os"
 )
 
 /* 	Напишите программу для вычисления площади прямоугольника.
@@ -23,7 +22,7 @@ func main() {
 	if err != nil {
 		// error here
 		fmt.Printf("Error enter")
-		os.Exit(128)
+		return
 	}
 
 	fmt.Printf("Введите, пожалуйста ширину: ")
@@ -31,7 +30,7 @@ func main() {
 	if err != nil {
 		// error here
 		fmt.Printf("Error enter")
-		os.Exit(128)
+		return
 	}
 
 	result := area(float64(length), float64(height))
