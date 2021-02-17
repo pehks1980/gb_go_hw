@@ -14,6 +14,7 @@ import (
 var (
 	nRows  = flag.Int64("Number of rows", 0, "Number of rows to read from file(not given = all rows)")
 	flCols = flag.String("columns", "", "columns list, separated by comma(not given = all columns)")
+	bFlVerbose = flag.Bool("v", true, "verbose output")
 )
 
 // struct member must start with capital otherwise marshal json doesnt work
@@ -111,13 +112,18 @@ func main() {
 		}
 
 		// Выводим значения строки в ожидаемом формате:
-		fmt.Printf("---------- Строка %d ---------\n", i)
+		if *bFlVerbose {
+			fmt.Printf("---------- Строка %d ---------\n", i)
+		}
+
 		//make map for JS cols
 		jsCols := make(map[string]string)
 
 		for col, mask := range colsMask {
 			if mask == 1 {
-				fmt.Printf("%s:\t%s\n", col, row[colsIdx[col]])
+				if *bFlVerbose {
+					fmt.Printf("%s:\t%s\n", col, row[colsIdx[col]])
+				}
 				//add key val to jsCols
 				jsCols[col] = row[colsIdx[col]]
 
@@ -127,8 +133,9 @@ func main() {
 		jsRow := Row{Cols: jsCols}
 		// build array of these Row structs
 		rows = append(rows, jsRow)
-
-		fmt.Printf("-----------------------------\n\n")
+		if *bFlVerbose {
+			fmt.Printf("-----------------------------\n\n")
+		}
 
 		// if we reached nRows
 		if i == *nRows {
@@ -140,11 +147,15 @@ func main() {
 	// add JS appended row to js struct
 	js.Rows = rows
 
-	fmt.Println(js)
+	if *bFlVerbose {
+		fmt.Println(js)
+	}
 	//dump json to text
 	jsonTofile, _ := json.Marshal(&js)
 
-	fmt.Println(string(jsonTofile))
+	if *bFlVerbose {
+		fmt.Println(string(jsonTofile))
+	}
 
 	filenameO := path + "/hw9/app1/" + "test.json"
 	//dump JS to file
