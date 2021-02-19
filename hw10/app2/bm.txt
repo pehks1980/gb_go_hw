@@ -1,0 +1,8 @@
+goos: linux
+goarch: amd64
+pkg: github.com/pehks1980/gb_go_hw/hw10/app2
+BenchmarkFibboRecursive-4        	     157	   7571345 ns/op
+BenchmarkFibboRecursiveCache-4   	26605605	        44.8 ns/op
+BenchmarkFibboSum-4              	36910473	        27.4 ns/op
+PASS
+ok  	github.com/pehks1980/gb_go_hw/hw10/app2	4.818s

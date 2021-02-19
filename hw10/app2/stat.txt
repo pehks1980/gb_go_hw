@@ -1,0 +1,4 @@
+name                   time/op
+FibboRecursive-4       7.57ms ± 0%
+FibboRecursiveCache-4  44.8ns ± 0%
+FibboSum-4             27.4ns ± 0%
