@@ -14,7 +14,7 @@ import (
 var (
 	nRows  = flag.Int64("Number of rows", 0, "Number of rows to read from file(not given = all rows)")
 	flCols = flag.String("columns", "", "columns list, separated by comma(not given = all columns)")
-	bFlVerbose = flag.Bool("v", true, "verbose output")
+	bFlVerbose = flag.Bool("v", false, "verbose output")
 )
 
 // struct member must start with capital otherwise marshal json doesnt work

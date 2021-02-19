@@ -1,6 +1,10 @@
-package main
+package test_sort
 
-import "fmt"
+import (
+	"reflect"
+	"testing"
+)
+
 
 //функция сортирует список int
 func mySortIns(a []int) {
@@ -23,16 +27,22 @@ func mySortIns(a []int) {
 	//return a
 }
 
-func main() {
+////////////////////////////тест 1 - табличное тестирование
+func TestSplit(t *testing.T) {
+	tests := []struct {
+		name  string
+		input []int
+		want  []int
+	}{
+		{name: "insert sort positive", input: []int{5, 2, 6, 3, 1, 4}, want: []int{1, 2, 3, 4, 5, 6}},
+		{name: "insert sort negative", input: []int{5, -2, 6, -3, -1, 4}, want: []int{-3, -2, -1, 4, 5, 6}},
+		{name: "insert sort +,- 0s", input: []int{-5, 2, 0, 3, -1, 4}, want: []int{-5, -1, 0, 2, 3, 4}},
+	}
 
-	s1 := []int{5, 2, 6, 3, 1, 4} // unsorted
-	//sort.Sort(sort.Reverse(sort.IntSlice(s1)))
-	fmt.Println(s1)
-
-	mySortIns(s1)
-
-	fmt.Println(s1)
-
+	for _, tc := range tests {
+		mySortIns(tc.input)
+		if !reflect.DeepEqual(tc.want, tc.input) {
+			t.Fatalf("%s: expected: %v, got: %v", tc.name, tc.want, tc.input)
+		}
+	}
 }
-
-
