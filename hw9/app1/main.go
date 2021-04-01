@@ -31,7 +31,6 @@ func main() {
 	flag.Parse()
 
 	path, err := os.Getwd()
-
 	if err != nil {
 		log.Println(err)
 	}
@@ -98,7 +97,6 @@ func main() {
 	// process file csv
 	for {
 		row, err := reader.Read()
-
 		// Если в качестве ошибки получили EOF (End of file), значит
 		// файл закончился раньше, чем мы считали максимально заданное кол-во строк.
 		// прекращаем чтение
@@ -173,7 +171,6 @@ func main() {
 	}()
 
 	_, err = fileO.Write(jsonTofile)
-
 	// Как обычно, обрабатываем ошибку
 	if err != nil {
 		_ = fmt.Errorf("не могу записать в файл: %w", err)
